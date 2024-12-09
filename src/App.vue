@@ -1,47 +1,44 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from "vue";
+const name = ref("jhon doe");
+const status = ref("active");
+const tasks = ref(["task one", "task two", "task three"]);
+
+
+const toggleStatus = () => {
+    if (status.value === "active") {
+        status.value = "pending";
+    } else if (status.value === "pending") {
+        status.value = "inactive";
+    } else {
+        status.value = "active";
+    }
+};
+const addTask = () => {
+    if(newTask.value.trim() !== ''){
+        tasks.value.push(newTask.value);
+        newTask.value = '';
+    }
+};
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <h1>{{ name }}</h1>
+    <p v-if="status === 'active'">User Is Active</p>
+    <p v-else-if="status === 'pending'">User Pending</p>
+    <p v-else-if="status">User is Inactive</p>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+	<form @submit.prevent="addTask">
+		<label for="newTask">Add Task</label>
+		<input type="text" name="newTask" id="newTask" v-model="newTask">
+		<button type="submit">Add Task</button>
+	</form>
 
-  <main>
-    <TheWelcome />
-  </main>
+    <h3>Task</h3>
+    <ul>
+        <li v-for="task in tasks" :key="task">{{ task }}</li>
+    </ul>
+    <!-- <button v-on:click="togglestatus">Change Status</button> -->
+    <button @click="toggleStatus">Change Status</button>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
