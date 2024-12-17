@@ -2,10 +2,15 @@
 import { RouterLink, useRoute } from "vue-router";
 import logo from "../assets/img/logo.png";
 
-const isActiveLink = (routePath) => {
+// const isActiveLink = (routePath) => {
+//     const route = useRoute();
+//     return route.path === routePath;
+// };
+
+function isActiveLink(links){
     const route = useRoute();
-    return route.path === routePath;
-};
+    return route.path === links;
+}
 </script>
 
 <template>
