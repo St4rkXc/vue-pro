@@ -1,6 +1,17 @@
 <script setup>
 import { defineProps, ref, computed } from "vue";
 import { RouterLink } from "vue-router";
+
+/**
+ * Define the props for the component.
+ * @property {Object} job - The job object containing job details.
+ * @property {string} job.type - The type of the job.
+ * @property {string} job.title - The title of the job.
+ * @property {string} job.description - The description of the job.
+ * @property {string} job.salary - The salary for the job.
+ * @property {string} job.location - The location of the job.
+ * @property {number} job.id - The unique identifier for the job.
+ */
 const props = defineProps({
     job: {
         type: Object,
@@ -8,12 +19,23 @@ const props = defineProps({
     },
 });
 
+/**
+ * A ref to track whether the full description is shown.
+ * @type {boolean}
+ */
 const showFullDescription = ref(false);
 
+/**
+ * Toggles the visibility of the full job description.
+ */
 const toggleFullDesc = () => {
     showFullDescription.value = !showFullDescription.value;
 };
 
+/**
+ * Computes the truncated job description based on the visibility state.
+ * @returns {string} The truncated or full job description.
+ */
 const truncatedDescription = computed(() => {
     let desc = props.job.description;
     if (!showFullDescription.value) {
@@ -22,7 +44,6 @@ const truncatedDescription = computed(() => {
     return desc;
 });
 </script>
-
 <template>
     <div class="relative bg-white shadow-md rounded-xl">
         <div class="p-4">
